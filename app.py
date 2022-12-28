@@ -39,7 +39,8 @@ def speech_to_text(video_file_path, transcribe_options):
             'end': segment['end'],
             'text': segment['text']
                             }
-            df = df.append(new_row, ignore_index=True)
+            # df = df.append(new_row, ignore_index=True)
+            df = pd.concat([df, pd.DataFrame([new_row])], axis=0, ignore_index=True)
 
         return (df)
     except Exception as e:
