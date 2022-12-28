@@ -7,12 +7,14 @@ Whisper-ASR-youtube-subtitles: https://huggingface.co/spaces/Finnish-NLP/Whisper
 
 ## Get started
 
+Requires ffmpeg
+
 Create a virtual environment and install dependencies
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-pip install git+https://github.com/openai/whisper.git 
+pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
 ```
 
 Enter virtual environment
