@@ -1,6 +1,5 @@
 import whisper
 import pandas as pd
-import time
 
 # Load OpenAI Whisper base model
 model = whisper.load_model("base")
@@ -22,8 +21,6 @@ def speech_to_text(video_file_path, transcribe_options):
         audio = whisper.load_audio(video_file_path)
     except Exception as e:
         raise RuntimeError("Error converting video to audio")
-
-    last_time = time.time()
 
     try:
         print(f'Transcribing via local model')

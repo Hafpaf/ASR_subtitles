@@ -2,27 +2,47 @@
 
 This project uses the Automatic speech recognition (ASR) model [OpenAI Whisper](https://github.com/openai/whisper) to create subtitles for talks. 
 
+Fetch a talk from [media.ccc.de](https://media.ccc.de/) to test the program out.
 
-Whisper-ASR-youtube-subtitles: https://huggingface.co/spaces/Finnish-NLP/Whisper-ASR-youtube-subtitles
+Much inspiration have been drawn from [Whisper-ASR-youtube-subtitles](https://huggingface.co/spaces/Finnish-NLP/Whisper-ASR-youtube-subtitles).
 
 ## Get started
 
-Requires ffmpeg
+### Install dependencies
+As noted in the [OpenAI Whisper](https://github.com/openai/whisper) repository, the library should work with Python 3.7 and later.
+```bash
+# Ubuntu or Debian
+sudo apt update && sudo apt install ffmpeg python3.8 python3.8-venv
 
-Create a virtual environment and install dependencies
+# Arch Linux
+sudo pacman -S ffmpeg, python, python-virtualenv
+```
+
+
+Create a virtual environment and install dependencies.
+Look into the [OpenAI Whisper setup](https://github.com/openai/whisper#setup) if you encounter dependency errors.
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
+pip install git+https://github.com/openai/whisper.git 
 ```
 
-Enter virtual environment
+### Run
+Enter virtual environment and run
 ```bash
 source venv/bin/activate
+python app.py
 ```
 
 Exit virtual environment
 ```bash
 deactivate
+```
+
+
+### Miscellaneous
+Update Whisper library
+```bash
+pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
 ```
