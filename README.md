@@ -47,8 +47,10 @@ pip install git+https://github.com/openai/whisper.git
 Enter virtual environment and run
 ```bash
 source venv/bin/activate
-python app.py --video <video_file_path>
+python app.py --video <video_file>
 ```
+
+The program outputs a [SRT](https://en.wikipedia.org/wiki/SubRip) file named `<video_file>.srt`. You can use VLC or other media players to play the video and add the subtitles.
 
 Exit virtual environment
 ```bash
