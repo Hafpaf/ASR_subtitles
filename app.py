@@ -1,16 +1,23 @@
 import whisper
 import pandas as pd
+import argparse
+
+# Arguments
+parser = argparse.ArgumentParser(description='Create subtitle file from video.')
+parser.add_argument('-V', '--video',
+                    dest='video',
+                    type=str,
+                    help='Video file to be processed'
+                    )
 
 # Load OpenAI Whisper base model
 model = whisper.load_model("base")
 
 # I got no idea of what this has to do with 'temperature',
-#  but it transcribes more precisely
+#  but Whisper transcribes more precisely.
 # Borrowed from here: https://huggingface.co/spaces/Finnish-NLP/Whisper-ASR-youtube-subtitles/blob/main/app.py#L28
 # See https://github.com/openai/whisper/blob/main/whisper/transcribe.py#L264
 transcribe_options = dict(beam_size=3, best_of=3, without_timestamps=False)
-
-video = "import-4192-eng-This_years_badge_hd.mp4"
 
 # ToDo: Fix text in start of video when there is no talking
 def transcribe_audio(video_file_path: str, transcribe_options) -> pd.DataFrame:
@@ -98,5 +105,12 @@ def create_srt(df: pd.DataFrame, video: str):
 
     print("Subtitles have been finished")
 
-transcribe = transcribe_audio(video, transcribe_options)
-subtitles_creation = create_srt(transcribe, video)
+def main():
+    args = parser.parse_args()
+    video = args.video
+
+    transcribe = transcribe_audio(video, transcribe_options)
+    subtitles_creation = create_srt(transcribe, video)
+
+if __name__=="__main__":
+    main()

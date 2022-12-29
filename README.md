@@ -34,7 +34,7 @@ pip install git+https://github.com/openai/whisper.git
 Enter virtual environment and run
 ```bash
 source venv/bin/activate
-python app.py
+python app.py --video <video_file_path>
 ```
 
 Exit virtual environment
