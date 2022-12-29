@@ -1,6 +1,8 @@
-# Whisper Subtitles
+# ASR Subtitles
 
-This project uses the Automatic speech recognition (ASR) model [OpenAI Whisper](https://github.com/openai/whisper) to create subtitles for talks. 
+## Introduction
+
+This project uses the Automatic Speech Recognition (ASR) model [OpenAI Whisper](https://github.com/openai/whisper) to create subtitles for talks and and other video's. Whisper correctly transcribes most words and sentences, but not everything, so manual correction MUST be performed at a later time. An example of wrong recognition is that it can in some cases recognize the word 'batch' as 'patch', read the [Whisper model card](https://github.com/openai/whisper/blob/main/model-card.md) for more information on transcription precision.
 
 Fetch a talk from [media.ccc.de](https://media.ccc.de/) to test the program out.
 
