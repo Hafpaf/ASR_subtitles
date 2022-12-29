@@ -10,7 +10,8 @@ parser.add_argument('-V', '--video',
                     help='Video file to be processed'
                     )
 
-# Load OpenAI Whisper base model
+# Load OpenAI Whisper base model. 
+# The paper describes the precision of the models in more details: https://arxiv.org/abs/2212.04356
 model = whisper.load_model("base")
 
 # I got no idea of what this has to do with 'temperature',
@@ -19,7 +20,7 @@ model = whisper.load_model("base")
 # See https://github.com/openai/whisper/blob/main/whisper/transcribe.py#L264
 transcribe_options = dict(beam_size=3, best_of=3, without_timestamps=False)
 
-# ToDo: Fix text in start of video when there is no talking
+# ToDo: Fix text in start of video before speaker talks.
 def transcribe_audio(video_file_path: str, transcribe_options) -> pd.DataFrame:
     """
     Load file and process the audio
@@ -46,9 +47,9 @@ def transcribe_audio(video_file_path: str, transcribe_options) -> pd.DataFrame:
 
         for i,segment in enumerate(transcription['segments']):
             new_row = {'start': segment['start'],
-            'end': segment['end'],
-            'text': segment['text']
-                        }
+                        'end': segment['end'],
+                        'text': segment['text']
+                    }
             df = pd.concat([df, pd.DataFrame([new_row])], axis=0, ignore_index=True)
 
         return (df)
