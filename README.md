@@ -19,6 +19,12 @@ Performance have been tested on the 18 minute talk "[This years badge](https://m
 |3 GHz CPU | base model | 15 min 12 sec |
 | Nvidia Tesla M60, 1 core | base model | 1 min 36 sec |
 | Nvidia Tesla M60, 1 core | medium model | 7 min 11 sec |
+| Nvidia RTX 3090 | tiny model | 21 sec |
+| Nvidia RTX 3090 | base model | 35 sec |
+| Nvidia RTX 3090 | small model | 1 min 4 sec |
+| Nvidia RTX 3090 | medium model | 2 min 3 sec |
+| Nvidia RTX 3090 | large model |  2 min 53 sec |
+
 
 
 ## Get started
@@ -50,7 +56,7 @@ source venv/bin/activate
 python app.py --video <video_file>
 ```
 
-The program outputs a [SRT](https://en.wikipedia.org/wiki/SubRip) file named `<video_file>.srt`. You can use VLC or other media players to play the video and add the subtitles.
+The program outputs a [SRT](https://en.wikipedia.org/wiki/SubRip) file named `<video_file>.srt  `. You can use VLC or other media players to play the video and add the subtitles.
 
 Exit virtual environment
 ```bash
