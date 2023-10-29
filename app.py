@@ -1,27 +1,28 @@
 import whisper
 import pandas as pd
 import argparse
+import os
 
 # Arguments
 parser = argparse.ArgumentParser(description='Create subtitle file from video.')
-parser.add_argument('-V', '--video',
+parser.add_argument('-v', '--video',
                     dest='video',
                     type=str,
                     help='Video file to be processed'
                     )
-
-# Load OpenAI Whisper base model. 
-# The paper describes the precision of the models in more details: https://arxiv.org/abs/2212.04356
-model = whisper.load_model("base")
-
-# I got no idea of what this has to do with 'temperature',
-#  but Whisper transcribes more precisely.
-# Borrowed from here: https://huggingface.co/spaces/Finnish-NLP/Whisper-ASR-youtube-subtitles/blob/main/app.py#L28
-# See https://github.com/openai/whisper/blob/main/whisper/transcribe.py#L264
-transcribe_options = dict(beam_size=3, best_of=3, without_timestamps=False)
+parser.add_argument('-l', '--language',
+                    dest='language',
+                    action='store_const',
+                    help='Manually set transcription language',
+                    )
+parser.add_argument('-m', '--model',
+                    dest='whisper_model',
+                    default="base",
+                    help='Set OpenAI Whisper model',
+                    )
 
 # ToDo: Fix text in start of video before speaker talks.
-def transcribe_audio(video_file_path: str, transcribe_options) -> pd.DataFrame:
+def transcribe_audio(video_file_path: str, model, transcribe_options) -> pd.DataFrame:
     """
     Load file and process the audio
 
@@ -37,7 +38,7 @@ def transcribe_audio(video_file_path: str, transcribe_options) -> pd.DataFrame:
     except Exception as e:
         raise RuntimeError("Error converting video to audio")
     try:
-        print(f'Transcribing via local model')
+        print(f'Transcribing with local model')
 
         # Transcribe audio
         transcription = model.transcribe(audio, **transcribe_options)
@@ -108,10 +109,31 @@ def create_srt(df: pd.DataFrame, video: str):
 
 def main():
     args = parser.parse_args()
-    video = args.video
+    file_path = args.video
+    if args.language is not None:
+        language_setting = args.language
+    else:
+        language_setting = None
 
-    transcribe = transcribe_audio(video, transcribe_options)
-    subtitles_creation = create_srt(transcribe, video)
+    # Load OpenAI Whisper model.
+    # The paper describes the precision of the models in more details: https://arxiv.org/abs/2212.04356
+    model = whisper.load_model(args.whisper_model)
+
+    # I got no idea of what this has to do with 'temperature',
+    #  but Whisper transcribes more precisely.
+    # Borrowed from here: https://huggingface.co/spaces/Finnish-NLP/Whisper-ASR-youtube-subtitles/blob/main/app.py#L28
+    # See https://github.com/openai/whisper/blob/f82bc59f5ea234d4b97fb2860842ed38519f7e65/whisper/transcribe.py#L263C2-L263C2
+    transcribe_options = dict(beam_size=3, best_of=3, without_timestamps=False)#, language=language_setting)
+
+    if os.path.isdir(file_path): # If directory, then loop over files
+        for file in os.listdir(file_path):
+            tmp_file_path=f'{file_path}{file}'
+            transcribe = transcribe_audio(tmp_file_path, model, transcribe_options)
+            create_srt(transcribe, tmp_file_path)
+            print(f'Transcribed video: {tmp_file_path}')
+    else: # Transcribe single file
+        transcribe = transcribe_audio(file_path, transcribe_options)
+        create_srt(transcribe, file_path)
 
 if __name__=="__main__":
     main()

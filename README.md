@@ -45,6 +45,7 @@ Look into the [OpenAI Whisper setup](https://github.com/openai/whisper#setup) if
 ```bash
 python3 -m venv venv
 source venv/bin/activate
+pip install --upgrade pip
 pip install -r requirements.txt
 pip install git+https://github.com/openai/whisper.git 
 ```
