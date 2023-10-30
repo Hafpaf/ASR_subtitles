@@ -3,11 +3,12 @@
 ## Introduction
 
 This project uses the Automatic Speech Recognition (ASR) model [OpenAI Whisper](https://github.com/openai/whisper) to create subtitles for talks and similar video's.
-Whisper correctly transcribes most words and sentences with the base model, but the Word Error Rate (WER) can be decreased with the larger (and more ressource hungry) models. 
+Whisper correctly transcribes most words and sentences with the base model, but the Word Error Rate (WER) can be decreased with the larger (and more resource hungry) models. 
 
 This tool can potentially take much of the required workload out of transcribing subtitles, however, manual correction MUST be performed at a later time to ensure of precision.
 
-An example of wrong word recognition with the base model, is the word 'batch' can be recognized as 'patch' in some cases, but can be correctly recognized with the medium model. Read the [OpenAI Whisper model card](https://github.com/openai/whisper/blob/main/model-card.md) and the paper [Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) by Radford et al. for more information on transcription precision.
+An example of wrong word recognition with the base model, is the word 'batch' can be recognized as 'patch' in some cases. 
+While this is the case for the base and tiny model, it is not necessarily an issue in the larger models. Read the [OpenAI Whisper model card](https://github.com/openai/whisper/blob/main/model-card.md) and the paper [Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) by Radford et al. for more information on transcription precision.
 
 Fetch a talk from [media.ccc.de](https://media.ccc.de/) to test the program out.
 
@@ -33,7 +34,7 @@ Performance have been tested on the 18 minute talk "[This years badge](https://m
 As noted in the [OpenAI Whisper](https://github.com/openai/whisper) repository, the library should work with Python 3.7 and later.
 ```bash
 # Ubuntu or Debian
-sudo apt update && sudo apt install ffmpeg python3.8 python3.8-venv
+sudo apt update && sudo apt install ffmpeg python3.9 python3.9-venv
 
 # Arch Linux
 sudo pacman -S ffmpeg, python, python-virtualenv
