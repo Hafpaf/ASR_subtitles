@@ -32,14 +32,35 @@ Performance have been tested on the 18 minute talk "[This years badge](https://m
 
 ### Install dependencies
 As noted in the [OpenAI Whisper](https://github.com/openai/whisper) repository, the library should work with Python 3.7 and later.
-```bash
-# Ubuntu or Debian
-sudo apt update && sudo apt install ffmpeg python3.9 python3.9-venv
 
-# Arch Linux
+Required dependencies are ffmpeg, a Python 3 version with the virtual environment package, python dependencies listed in requirements.txt file as well as Nvidia drivers for your GPU.
+
+#### Ubuntu
+
+```bash
+sudo apt update && sudo apt install ffmpeg python3.9 python3.9-venv
+```
+
+**Nvidia drivers**
+
+Install GPU drivers. In case OpenAI Whisper cannot find drivers, it will use the CPU on the machine to transcribe, which takes significantly longer.
+
+```bash
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt install nvidia-common ubuntu-drivers-common
+sudo ubuntu-drivers devices
+sudo ubuntu-drivers autoinstall
+```
+
+#### Arch Linux
+
+```bash
 sudo pacman -S ffmpeg, python, python-virtualenv
 ```
 
+More information on the [Arch wiki](https://wiki.archlinux.org/title/NVIDIA) about Nvidia drivers.
+
+#### Python Environment Setup
 
 Create a virtual environment and install dependencies.
 Look into the [OpenAI Whisper setup](https://github.com/openai/whisper#setup) if you encounter dependency errors.
