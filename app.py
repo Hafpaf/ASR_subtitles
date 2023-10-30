@@ -13,6 +13,7 @@ parser.add_argument('-v', '--video',
 parser.add_argument('-l', '--language',
                     dest='language',
                     action='store_const',
+                    const='en', # ToDo: defaults to None in order for Whisper to recognize the language itself
                     help='Manually set transcription language',
                     )
 parser.add_argument('-m', '--model',
