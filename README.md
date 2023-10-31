@@ -35,10 +35,10 @@ As noted in the [OpenAI Whisper](https://github.com/openai/whisper) repository, 
 
 Required dependencies are ffmpeg, a Python 3 version with the virtual environment package, python dependencies listed in requirements.txt file as well as Nvidia drivers for your GPU.
 
-#### Ubuntu
+#### Ubuntu 20.04 LTS
 
 ```bash
-sudo apt update && sudo apt install ffmpeg python3.9 python3.9-venv
+sudo apt update && sudo apt upgrade -y && sudo apt install ffmpeg python3.9 python3.9-venv
 ```
 
 **Nvidia drivers**
@@ -47,7 +47,8 @@ Install GPU drivers. In case OpenAI Whisper cannot find drivers, it will use the
 
 ```bash
 sudo add-apt-repository ppa:graphics-drivers/ppa
-sudo apt install nvidia-common ubuntu-drivers-common
+sudo apt update
+sudo apt install nvidia-common ubuntu-drivers-common -y
 sudo ubuntu-drivers devices
 sudo ubuntu-drivers autoinstall
 ```
