@@ -133,7 +133,7 @@ def main():
             create_srt(transcribe, tmp_file_path)
             print(f'Transcribed video: {tmp_file_path}')
     else: # Transcribe single file
-        transcribe = transcribe_audio(file_path, transcribe_options)
+        transcribe = transcribe_audio(file_path, model, transcribe_options)
         create_srt(transcribe, file_path)
 
 if __name__=="__main__":
