@@ -13,9 +13,10 @@ While this is the case for the base and tiny model, it is not necessarily an iss
 Fetch a talk from [media.ccc.de](https://media.ccc.de/) to test the program out.
 
 ### Performance
-Performance have been tested on the 18 minute talk "[This years badge](https://media.ccc.de/v/bornhack2022-4192-this-years-badge)" by Thomas Flummer from Bornhack2022.
 
-|  Processor | Model | Computation duration |
+Performance have been tested on the 18 minute talk "[This years badge](https://media.ccc.de/v/bornhack2022-4192-this-years-badge)" by Thomas Flummer from Bornhack 2022.
+
+|  Processor | Model | Transcribe duration |
 | --- | --- | --- |
 |3 GHz CPU | base model | 15 min 12 sec |
 | Nvidia Tesla M60, 1 core | base model | 1 min 36 sec |
@@ -25,8 +26,7 @@ Performance have been tested on the 18 minute talk "[This years badge](https://m
 | Nvidia RTX 3090 | small model | 1 min 4 sec |
 | Nvidia RTX 3090 | medium model | 2 min 3 sec |
 | Nvidia RTX 3090 | large model |  2 min 53 sec |
-
-
+| Nvidia RTX A4000 | tiny model |  47 sec |
 
 ## Get started
 
@@ -38,7 +38,9 @@ Required dependencies are ffmpeg, a Python 3 version with the virtual environmen
 #### Ubuntu 20.04 LTS
 
 ```bash
-sudo apt update && sudo apt upgrade -y && sudo apt install ffmpeg python3.9 python3.9-venv
+sudo apt update
+sudo apt upgrade -y
+sudo apt install ffmpeg python3.9 python3.9-venv
 ```
 
 **Nvidia drivers**
@@ -53,10 +55,24 @@ sudo ubuntu-drivers devices
 sudo ubuntu-drivers autoinstall
 ```
 
-#### Arch Linux
+#### Debian 12 "Bookworm"
+
+Install the following packages
 
 ```bash
-sudo pacman -S ffmpeg, python, python-virtualenv
+sudo apt update
+sudo apt install linux-headers-amd64 ffmpeg python3.11 python3.11-venv
+```
+
+See the following [wiki article](https://wiki.debian.org/NvidiaGraphicsDrivers#bookworm-525) for Nvidia driver installation instructions.
+
+
+#### Arch Linux
+
+Install the following packages
+
+```bash
+sudo pacman -Sy ffmpeg python python-virtualenv
 ```
 
 More information on the [Arch wiki](https://wiki.archlinux.org/title/NVIDIA) about Nvidia drivers.
@@ -77,10 +93,30 @@ pip install git+https://github.com/openai/whisper.git
 Enter virtual environment and run
 ```bash
 source venv/bin/activate
-python app.py --video <video_file>
+python app.py --video <video_file> --model <whipser model>
 ```
 
-The program outputs a [SRT](https://en.wikipedia.org/wiki/SubRip) file named `<video_file>.srt  `. You can use VLC or other media players to play the video and add the subtitles.
+Parameters:
+```
+usage: app.py [-h] [-v VIDEO] [-l] [-m WHISPER_MODEL]
+
+Create subtitle file from video.
+
+options:
+  -h, --help            show this help message and exit
+  -v VIDEO, --video VIDEO
+                        Video file to be processed
+  -l, --language        Manually set transcription language
+  -m WHISPER_MODEL, --model WHISPER_MODEL
+                        Set OpenAI Whisper model
+```
+
+The sample below runs ASR subtitles on a directory of videos with the large OpenAI Whisper model, and times it as well:
+```bash
+time python app.py --video videos/ --model large
+```
+
+The program outputs a [SRT](https://en.wikipedia.org/wiki/SubRip) file named `<video_file>.srt` in the same directory as the video file. You can use [VLC](https://www.videolan.org/vlc/) or other media players to play the video and add the subtitles.
 
 Exit virtual environment
 ```bash
