@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+
 import whisper
 import pandas as pd
 import argparse
 import os
+from datetime import datetime
 
 # Arguments
 parser = argparse.ArgumentParser(description='Create subtitle file from video.')
@@ -74,7 +77,7 @@ def time_calc(milliseconds) -> str:
 
     return f"{hours}:{minutes:02d}:{seconds:02d},{milliseconds:03d}"
 
-def create_srt(df: pd.DataFrame, video: str):
+def create_srt(df: pd.DataFrame, video: str, model: str):
     """
     Format dataframes to SRT file
     SubRip file format information: https://en.wikipedia.org/wiki/SubRip
@@ -82,6 +85,11 @@ def create_srt(df: pd.DataFrame, video: str):
 
     print("Starting creation SRT file")
     with open(f'{video}.srt','w', encoding="utf-8") as file:
+        # Add details on transcription date and model size
+        date=datetime.now().isoformat(timespec='hours') #datetime.timezone.utc is available from python3.11
+        subtitle_header = f'# Transcribed {date} with OpenAI Whisper {model} model \n# Proofreading by: <name> \n# Quality check by: <name>'
+        file.write(subtitle_header + '\n\n')
+
         for i in range(len(df)):
             # Set index
             file.write(str(i+1))
@@ -130,11 +138,11 @@ def main():
         for file in os.listdir(file_path):
             tmp_file_path=f'{file_path}{file}'
             transcribe = transcribe_audio(tmp_file_path, model, transcribe_options)
-            create_srt(transcribe, tmp_file_path)
+            create_srt(transcribe, tmp_file_path, args.whisper_model)
             print(f'Transcribed video: {tmp_file_path}')
     else: # Transcribe single file
         transcribe = transcribe_audio(file_path, model, transcribe_options)
-        create_srt(transcribe, file_path)
+        create_srt(transcribe, file_path, args.whisper_model)
 
 if __name__=="__main__":
     main()
