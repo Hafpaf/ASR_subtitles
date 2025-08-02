@@ -3,11 +3,11 @@
 ## Introduction
 
 This project uses the Automatic Speech Recognition (ASR) model [OpenAI Whisper](https://github.com/openai/whisper) to create subtitles for talks and similar video's.
-Whisper correctly transcribes most words and sentences with the base model, but the Word Error Rate (WER) can be decreased with the larger (and more resource hungry) models. 
+Whisper correctly transcribes most words and sentences with the base model, but the Word Error Rate (WER) can be decreased with the larger (and more resource hungry) models.
 
 This tool can potentially take much of the required workload out of transcribing subtitles, however, manual correction MUST be performed at a later time to ensure of precision.
 
-An example of wrong word recognition with the base model, is the word 'batch' can be recognized as 'patch' in some cases. 
+An example of wrong word recognition with the base model, is the word 'batch' can be recognized as 'patch' in some cases.
 While this is the case for the base and tiny model, it is not necessarily an issue in the larger models. Read the [OpenAI Whisper model card](https://github.com/openai/whisper/blob/main/model-card.md) and the paper [Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) by Radford et al. for more information on transcription precision.
 
 Fetch a talk from [media.ccc.de](https://media.ccc.de/) to test the program out.
@@ -36,12 +36,12 @@ As noted in the [OpenAI Whisper](https://github.com/openai/whisper) repository, 
 
 Required dependencies are ffmpeg, a Python 3 version with the virtual environment package, python dependencies listed in requirements.txt file as well as Nvidia drivers for your GPU.
 
-#### Ubuntu 20.04 LTS
+#### Ubuntu 22.04.5 LTS
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
-sudo apt install ffmpeg python3.9 python3.9-venv
+sudo apt install ffmpeg python3.10 python3.10-venv
 ```
 
 **Nvidia drivers**
@@ -55,6 +55,8 @@ sudo apt install nvidia-common ubuntu-drivers-common -y
 sudo ubuntu-drivers devices
 sudo ubuntu-drivers autoinstall
 ```
+
+You may need to reboot to make the driver recognisted. Try the `nvidia-smi` command to see if it works or gives an error.
 
 #### Debian 12 "Bookworm"
 
@@ -87,7 +89,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
-pip install git+https://github.com/openai/whisper.git 
+pip install git+https://github.com/openai/whisper.git
 ```
 
 ### Run
