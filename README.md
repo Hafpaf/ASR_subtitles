@@ -25,8 +25,9 @@ Performance have been tested on the 18 minute talk "[This years badge](https://m
 | Nvidia RTX 3090 | base model | 35 sec |
 | Nvidia RTX 3090 | small model | 1 min 4 sec |
 | Nvidia RTX 3090 | medium model | 2 min 3 sec |
-| Nvidia RTX 3090 | large model |  2 min 53 sec |
+| Nvidia RTX 3090 | large model (v2) |  2 min 53 sec |
 | Nvidia RTX A4000 | tiny model |  47 sec |
+| Nvidia RTX A4000 | large model (v3) |  4 min 12 sec |
 
 ## Get started
 
